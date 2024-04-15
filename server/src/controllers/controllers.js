@@ -71,7 +71,7 @@ const createPQR = async (UserId, tipo, prioridad, contenido) => {
 const findPQR = async (UserId) => {
   try {
     const userComplaints = await PQR.findAll({
-      where: { UserId: `${UserId}` },
+      where: { UserId: UserId },
     });
     return userComplaints;
   } catch (error) {
@@ -79,8 +79,35 @@ const findPQR = async (UserId) => {
   }
 }; //OK
 
+const deletingPQR = async (id) => {
+  try {
+    const delSucces = await PQR.destroy({
+      where: { id: id },
+    });
+    return delSucces;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const updatingUser = async (id, telefono, email, activo) => {
+  try {
+    const userUpdated = await User.update(
+      { email: email, telefono: telefono, activo: activo },
+      {
+        where: { id: id },
+      }
+    );
+    return userUpdated;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   createUser,
   createPQR,
   findPQR,
+  deletingPQR,
+  updatingUser,
 };

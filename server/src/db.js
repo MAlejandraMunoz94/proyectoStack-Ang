@@ -3,8 +3,6 @@ const { Sequelize } = require("sequelize");
 const UserModel = require("./models/User");
 const PQRModel = require("./models/PQR");
 
-//const fs = require("fs");
-//const path = require("path");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
@@ -17,28 +15,6 @@ const sequelize = new Sequelize(
 // creo la instancia de SEQUELIZE con los datos de la conexion a la BBDD y la exporto para ejecutarla
 //al momento de levantar el servidor
 
-//const basename = path.basename(__filename);
-
-//const modelDefiners = [];
-
-//fs.readdirSync(path.join(__dirname, "/models"))
-//  .filter(
-//    (file) =>
-//      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
-//  )
-//  .forEach((file) => {
-//    modelDefiners.push(require(path.join(__dirname, "/models", file)));
-//  });
-
-//modelDefiners.forEach((model) => model(sequelize));
-
-//let entries = Object.entries(sequelize.models);
-//let capsEntries = entries.map((entry) => [
-//  entry[0][0].toUpperCase() + entry[0].slice(1),
-//  entry[1],
-//]);
-//sequelize.models = Object.fromEntries(capsEntries);
-
 UserModel(sequelize);
 PQRModel(sequelize);
 
@@ -48,6 +24,6 @@ User.hasMany(PQR, { foreignKey: "UserId", sourceKey: "id" });
 PQR.belongsTo(User, { foreignKey: "UserId", targetKeyKey: "id" });
 
 module.exports = {
-  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
-  sequelize, // para importart la conexión {sequelize} = require('./db.js');
+  ...sequelize.models, // para poder importar los modelos
+  sequelize, // para importart la conexión {sequelize}
 };

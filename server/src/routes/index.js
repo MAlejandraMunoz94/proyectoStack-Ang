@@ -3,7 +3,9 @@ const { Router } = require("express");
 const {
   registerUser,
   registerPQR,
-  getPQR,
+  getPQRSByUser,
+  updateUser,
+  deletePQR,
 } = require("../controllers/handlers");
 
 const router = Router();
@@ -14,10 +16,10 @@ const router = Router();
 //get  ver mis PQRS
 //delete eliminar mis PQRS
 
-router.post("/registerUser", registerUser); //OK
-//router.put();
-router.post("/registerPQR", registerPQR); //OK
-router.get("/PQR/:UserId", getPQR); // OK
-//router.delete();
+router.post("/user", registerUser); //OK
+router.put("/user/:id", updateUser);
+router.post("/PQR", registerPQR); //OK
+router.get("/PQR/:UserId", getPQRSByUser); // OK
+router.delete("/PQR/:id", deletePQR);
 
 module.exports = router;

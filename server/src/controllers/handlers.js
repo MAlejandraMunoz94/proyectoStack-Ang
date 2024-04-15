@@ -1,4 +1,10 @@
-const { createUser, createPQR, findPQR } = require("./controllers");
+const {
+  createUser,
+  createPQR,
+  findPQR,
+  deletingPQR,
+  updatingUser,
+} = require("./controllers");
 
 const registerUser = async (req, res) => {
   const {
@@ -46,7 +52,7 @@ const registerPQR = async (req, res) => {
   }
 }; //OK
 
-const getPQR = async (req, res) => {
+const getPQRSByUser = async (req, res) => {
   const { UserId } = req.params;
 
   try {
@@ -55,7 +61,35 @@ const getPQR = async (req, res) => {
     if (response.length > 0) {
       res.status(200).json(response);
     } else {
-      throw new Error("No cuenta con solicitudes registradas");
+      res.status(200).json("No cuenta con solicitudes registradas");
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}; //OK
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { telefono, email, activo } = req.body;
+
+  try {
+    const updated = await updatingUser(id, telefono, email, activo);
+    res.status(200).json("Informacion actualizada");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const deletePQR = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const deleted = await deletingPQR(id);
+
+    if (deleted === 1) {
+      res.status(200).json("Solicitud eliminada");
+    } else {
+      res.status(200).json("No se encontro la PQR");
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -65,5 +99,7 @@ const getPQR = async (req, res) => {
 module.exports = {
   registerUser,
   registerPQR,
-  getPQR,
+  getPQRSByUser,
+  updateUser,
+  deletePQR,
 };
