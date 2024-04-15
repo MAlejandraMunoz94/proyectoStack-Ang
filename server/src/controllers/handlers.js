@@ -6,14 +6,13 @@ const registerUser = async (req, res) => {
     nombre2,
     apellido1,
     apellido2,
-    tipoIdentificacion,
-    numeroIdentificacion,
+    tipoDocumento,
+    numeroDocumento,
     nacimiento,
     paisOrigen,
     ciudadOrigen,
     telefono,
     email,
-    activo,
   } = req.body;
 
   try {
@@ -22,14 +21,13 @@ const registerUser = async (req, res) => {
       nombre2,
       apellido1,
       apellido2,
-      tipoIdentificacion,
-      numeroIdentificacion,
+      tipoDocumento,
+      numeroDocumento,
       nacimiento,
       paisOrigen,
       ciudadOrigen,
       telefono,
-      email,
-      activo
+      email
     );
     res.status(200).json(responseUser);
   } catch (error) {

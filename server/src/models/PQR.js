@@ -1,8 +1,8 @@
 const { DataTypes } = require("sequelize");
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+
+// Exporto una funcion que define el modelo
 module.exports = (sequelize) => {
-  // defino el modelo
+  // defino el modelo con el metodo de sequelize
   sequelize.define("PQR", {
     id: {
       type: DataTypes.UUID,

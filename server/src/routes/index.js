@@ -17,7 +17,7 @@ const router = Router();
 router.post("/registerUser", registerUser); //OK
 //router.put();
 router.post("/registerPQR", registerPQR); //OK
-router.get("/PQR", getPQR); // OK
+router.get("/PQR/:UserId", getPQR); // OK
 //router.delete();
 
 module.exports = router;
