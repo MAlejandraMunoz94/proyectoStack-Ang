@@ -6,7 +6,7 @@ import { SideMenuComponent } from '../shared/sideMenu/sideMenu.component';
   selector: 'app-main-component',
   standalone: true,
   imports: [CommonModule, SideMenuComponent],
-  templateUrl: 'mainComponent.html',
+  templateUrl: 'main.Component.html',
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

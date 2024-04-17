@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
   selector: 'app-pagina-crear',
   standalone: true,
   imports: [CommonModule],
-  template: `<p>paginaCrear works!</p>`,
-  styleUrl: './paginaCrear.component.css',
+  templateUrl: 'paginaCrear.component.html',
 })
 export class PaginaCrearComponent {}

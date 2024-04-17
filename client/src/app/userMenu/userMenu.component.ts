@@ -7,6 +7,5 @@ import { SideMenuComponent } from '../shared/sideMenu/sideMenu.component';
   standalone: true,
   imports: [CommonModule, SideMenuComponent],
   templateUrl: 'userMenu.component.html',
-  styleUrl: './userMenu.component.css',
 })
 export class UserMenuComponent {}

@@ -6,6 +6,5 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   template: `<p>paginaVerTodos works!</p>`,
-  styleUrl: './paginaVerTodos.component.css',
 })
 export class PaginaVerTodosComponent {}

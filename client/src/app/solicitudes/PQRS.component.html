@@ -1,12 +1,20 @@
 <div
-  class="flex bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white"
+  class="flex bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-black"
 >
-  <div class="flex relative w-screen">
-    <app-side-menu />
+  <app-side-menu />
 
-    <div class="text-black px-2 mt-2 w-full">
-      Aqui iria el componente
-      <router-outlet></router-outlet>
+  <div class="w-full bg-slate-100 items-center justify-center">
+    <div class="flex w-screen bg-gray-800 justify-center">
+      @for (option of options ; track option.title){
+      <div class="flex w-full">
+        <app-pestana [routerLink]="option.path" name="{{ option.name }}" />
+      </div>
+
+      }
     </div>
+  </div>
+
+  <div class="w-screen">
+    <router-outlet />
   </div>
 </div>
