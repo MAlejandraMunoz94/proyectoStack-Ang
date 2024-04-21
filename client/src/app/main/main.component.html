@@ -1,14 +1,63 @@
-<div
-  class="flex bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white"
->
-  <app-side-menu />
+@if(userSesion.sesion){
+<div class="flex bg-slate-100 w-full h-full">
+  <div>
+    <app-side-menu />
+  </div>
+  <div class="w-full h-full items-center justify-center">
+    <div>
+      <app-header></app-header>
+      <section>
+        <div class="max-w-5xl px-6 py-4 mx-auto">
+          <div class="md:flex md:justify-center">
+            <h2 class="text-3xl font-semibold text-gray-800">
+              Volar con AirClub tiene su recompensa
+            </h2>
+          </div>
 
-  <div class="w-full items-center justify-center">
-    <div class="w-full p-2 bg-gray-800"></div>
-    <div class="w-full p-2 bg-yellow-600"></div>
-    <img
-      class="max-w-md"
-      src="https://media.istockphoto.com/id/985051668/es/foto/mujer-de-tur%C3%ADstica-en-la-estaci%C3%B3n-de-tren.jpg?s=612x612&w=0&k=20&c=cQ8BLtbdh5IWxQb-es0SEeSO0HOe_rHF-Wb95VYOVWw="
-    />
+          <div class="grid gap-8 mt-10 md:grid-cols-2 lg:grid-cols-3">
+            <div
+              class="px-6 py-2 overflow-hidden bg-white rounded-md shadow-md"
+            >
+              <h2 class="text-xl font-medium text-gray-800">AirVisa</h2>
+              <p class="max-w-md mt-4 text-gray-400">
+                ¡Nuevo! Solicita tu AirVisa y consigue puntos extra por tus
+                compras diarias y reservas, además de ventajas adicionales en
+                tus viajes.
+              </p>
+            </div>
+
+            <div
+              class="px-6 py-2 overflow-hidden bg-white rounded-md shadow-md"
+            >
+              <h2 class="text-xl font-medium text-gray-800">Descuentos</h2>
+              <p class="max-w-md mt-4 text-gray-400">
+                Acumula puntos con nosotros y con nuestros partners y utilízalos
+                para obtener descuentos o incluso vuelos gratis
+              </p>
+            </div>
+
+            <div
+              class="px-6 py-2 overflow-hidden bg-white rounded-md shadow-md"
+            >
+              <h2 class="text-xl font-medium text-gray-800">Extras</h2>
+              <p class="max-w-md mt-4 text-gray-400">
+                Paga con puntos las maletas, los asientos y cualquier extra que
+                añadas a tu reserva..
+              </p>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <img
+              class="object-cover object-center w-full mt-16 rounded-md shadow h-80"
+              src="https://media.istockphoto.com/id/539149167/es/foto/mujer-joven-rejoicing-cerca-de-colosseum-in-rome-italia-vista-posterior.jpg?s=612x612&w=0&k=20&c=xXcWBFwzmGYzgtwOr6uT1kNMwn06a8GzdrTuS4p397g="
+            />
+          </div>
+        </div>
+      </section>
+    </div>
   </div>
 </div>
+}@else {
+{{ goLogin() }}
+}

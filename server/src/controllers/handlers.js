@@ -2,8 +2,10 @@ const {
   createUser,
   createPQR,
   findPQR,
+  findUser,
   deletingPQR,
   updatingUser,
+  getAirportsApi,
 } = require("./controllers");
 
 const registerUser = async (req, res) => {
@@ -16,9 +18,9 @@ const registerUser = async (req, res) => {
     numeroDocumento,
     nacimiento,
     paisOrigen,
-    ciudadOrigen,
     telefono,
     email,
+    contrasena,
   } = req.body;
 
   try {
@@ -31,15 +33,45 @@ const registerUser = async (req, res) => {
       numeroDocumento,
       nacimiento,
       paisOrigen,
-      ciudadOrigen,
       telefono,
-      email
+      email,
+      contrasena
     );
     res.status(200).json(responseUser);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 }; //OK
+
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { telefono, email, contrasena, activo } = req.body;
+
+  try {
+    await updatingUser(id, telefono, email, contrasena, activo);
+    res.status(200).json("Informacion actualizada");
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const getUserInfo = async (req, res) => {
+  const { email } = req.params;
+
+  try {
+    const response = await findUser(email);
+
+    if (response.length > 0) {
+      res.status(200).json(response);
+    } else {
+      res
+        .status(200)
+        .json("El correo proporcionado no se encuentra registrado");
+    }
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 const registerPQR = async (req, res) => {
   const { UserId, tipo, prioridad, contenido } = req.body;
@@ -68,18 +100,6 @@ const getPQRSByUser = async (req, res) => {
   }
 }; //OK
 
-const updateUser = async (req, res) => {
-  const { id } = req.params;
-  const { telefono, email, activo } = req.body;
-
-  try {
-    const updated = await updatingUser(id, telefono, email, activo);
-    res.status(200).json("Informacion actualizada");
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-};
-
 const deletePQR = async (req, res) => {
   const { id } = req.params;
 
@@ -96,10 +116,21 @@ const deletePQR = async (req, res) => {
   }
 }; //OK
 
+const getAirports = async (req, res) => {
+  try {
+    const responseAirports = await getAirportsApi();
+    res.status(200).json(responseAirports);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
+  getUserInfo,
+  updateUser,
   registerPQR,
   getPQRSByUser,
-  updateUser,
   deletePQR,
+  getAirports,
 };

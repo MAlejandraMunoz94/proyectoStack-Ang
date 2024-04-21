@@ -41,15 +41,15 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ciudadOrigen: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
     telefono: {
       type: DataTypes.STRING,
       allowNull: true,
     },
     email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    contrasena: {
       type: DataTypes.STRING,
       allowNull: false,
     },

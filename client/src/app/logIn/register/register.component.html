@@ -1,140 +1,147 @@
 <div
-  class="max-w-lg rounded-lg shadow-md px-8 py-10 flex flex-col items-center"
+  class="max-w-md w-full max-w-lg rounded-lg shadow-md flex flex-col items-center"
 >
-  <div class="flex flex-col lg:flex-row max-w-md w-full bg-gray-800">
+  <div class="flex flex-col max-w-md w-full bg-gray-800">
     <app-logo />
   </div>
 
-  <h1 class="text-3xl font-semibold mb-6 text-gray-800 text-center p-4">
-    Registrate
-  </h1>
+  <h1 class="text-3xl font-semibold text-gray-800 text-center">Registrate</h1>
 
-  <form action="#" class="w-full gap-2 flex-cols">
-    <div class="">
-      <label for="firstName" class="block text-sm font-medium text-gray-700"
-        >Primer Nombre:</label
-      >
-      <input
-        type="text"
-        id="firstName"
-        name="firstName"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+  <form
+    [formGroup]="registerDataForm"
+    (ngSubmit)="registerFormSubmit()"
+    class="w-full flex-cols"
+  >
+    <label for="firstName" class="block text-sm font-medium text-gray-700"
+      >Primer Nombre:</label
+    >
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="nombre1"
+    />
 
-    <div class="">
-      <label for="lastName" class="block text-sm font-medium text-gray-700"
-        >Segundo Nombre:</label
-      >
-      <input
-        type="text"
-        id="lastName"
-        name="lastName"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="secondName" class="block text-sm font-medium text-gray-700"
+      >Segundo Nombre:</label
+    >
+    <input
+      type="text"
+      id="secondName"
+      name="secondName"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="nombre2"
+    />
 
-    <div class="">
-      <label for="username" class="block text-sm font-medium text-gray-700"
-        >Apellido paterno:</label
-      >
-      <input
-        type="text"
-        id="username"
-        name="username"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="lastName1" class="block text-sm font-medium text-gray-700"
+      >Apellido paterno:</label
+    >
+    <input
+      type="text"
+      id="lastName1"
+      name="lastName1"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="apellido1"
+    />
 
-    <div class="">
-      <label for="username" class="block text-sm font-medium text-gray-700"
-        >Apellido materno:</label
-      >
-      <input
-        type="text"
-        id="username"
-        name="username"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="lastName2" class="block text-sm font-medium text-gray-700"
+      >Apellido materno:</label
+    >
+    <input
+      type="text"
+      id="lastName2"
+      name="lastName2"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="apellido2"
+    />
 
-    <div class="">
-      <label for="username" class="block text-sm font-medium text-gray-700"
-        >Ciudad:</label
-      >
-      <input
-        type="text"
-        id="username"
-        name="username"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="country" class="block text-sm font-medium text-gray-700"
+      >Pais:</label
+    >
+    <select
+      id="country"
+      name="country"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="paisOrigen"
+    >
+      @for (pais of paises; track pais){
+      <option value="{{ pais }}">{{ pais }}</option>
+      }
+    </select>
 
-    <div class="">
-      <label for="username" class="block text-sm font-medium text-gray-700"
-        >Pais:</label
-      >
-      <input
-        type="text"
-        id="username"
-        name="username"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="birthday" class="block text-sm font-medium text-gray-700"
+      >Fecha de nacimiento:</label
+    >
+    <input
+      type="date"
+      id="birthday"
+      name="birthday"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="nacimiento"
+    />
 
-    <div class="">
-      <label for="username" class="block text-sm font-medium text-gray-700"
-        >Telefono:</label
-      >
-      <input
-        type="text"
-        id="username"
-        name="username"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="typeID" class="block text-sm font-medium text-gray-700"
+      >Tipo de documento:</label
+    >
+    <select
+      id="typeID"
+      name="typeID"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="tipoDocumento"
+    >
+      @for (tipo of tiposDeDocumento; track tipo){
+      <option value="{{ tipo }}">{{ tipo }}</option>
+      }
+    </select>
 
-    <div class="">
-      <label for="email" class="block text-sm font-medium text-gray-700"
-        >Email:</label
-      >
-      <input
-        type="email"
-        id="email"
-        name="email"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="numID" class="block text-sm font-medium text-gray-700"
+      >Numero de documento:</label
+    >
+    <input
+      type="text"
+      id="numID"
+      name="numID"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="numeroDocumento"
+    />
 
-    <div class="">
-      <label for="password" class="block text-sm font-medium text-gray-700"
-        >Contraseña:</label
-      >
-      <input
-        type="password"
-        id="password"
-        name="password"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="telephone" class="block text-sm font-medium text-gray-700"
+      >Telefono:</label
+    >
+    <input
+      type="text"
+      id="telephone"
+      name="telephone"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="telefono"
+    />
 
-    <div class="">
-      <label
-        for="confirmPassword"
-        class="block text-sm font-medium text-gray-700"
-        >Confirme su contraseña:</label
-      >
-      <input
-        type="password"
-        id="confirmPassword"
-        name="confirmPassword"
-        class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-      />
-    </div>
+    <label for="email" class="block text-sm font-medium text-gray-700"
+      >Email:</label
+    >
+    <input
+      type="email"
+      id="email"
+      name="email"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="email"
+    />
+
+    <label for="password" class="block text-sm font-medium text-gray-700"
+      >Contraseña:</label
+    >
+    <input
+      type="password"
+      id="password"
+      name="password"
+      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      formControlName="contrasena"
+    />
 
     <button
       type="submit"
-      class="w-full bg-yellow-600 text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
+      class="w-full bg-yellow-600 text-white p-1 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
     >
       Register
     </button>
@@ -144,6 +151,8 @@
     <span class="text-sm text-gray-600 dark:text-gray-300"
       >Ya eres socio?
     </span>
-    <a class="text-yellow-600 hover:underline" routerLink="/logIn">Sign in</a>
+    <a class="text-yellow-600 hover:underline" routerLink="/logIn"
+      >Inicia Sesión</a
+    >
   </div>
 </div>

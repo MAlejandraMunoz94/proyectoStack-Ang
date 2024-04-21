@@ -1,71 +1,53 @@
-<main
-  class="w-screen h-screen flex justify-center items-center dark:bg-gray-900"
->
-  <div class="max-w-7xl dark:bg-gray-950 dark:text-white">
+<div class="flex w-full h-full items-center justify-center">
+  <div
+    class="max-w-7xl dark:bg-gray-800 dark:text-white items-center justify-center"
+  >
     <form
       class="w-full p-4 rounded shadow-md"
       action="/submit-comment"
       method="post"
     >
       <h2
-        class="text-xl mb-4 tracking-wider font-lighter text-gray-900 dark:text-gray-200"
+        class="text-xl mb-4 font-medium tracking-wider font-lighter text-gray-800 dark:text-gray-200"
       >
-        Leave a Comment
+        Radica tu solicitud
       </h2>
       <p class="text-gray-600 mb-4">
-        Your email address will not be published. Required fields are marked *
+        Las solicitudes son revisadas y procesadas acorde a las politicas de
+        servicio al cliente
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-gray-600">
         <div class="mb-4 col-span-1 md:col-span-3">
+          <div class="mb-4">
+            <select
+              class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed"
+              required
+            >
+              <option>Peticion</option>
+              <option>Queja</option>
+              <option>Sugerencia</option>
+              <option>Felicitacion</option>
+            </select>
+          </div>
           <textarea
             id="comment"
             name="comment"
-            class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed resize-none"
-            placeholder="Type Comment...*"
+            class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed"
+            placeholder="Detalle su solicitud ..."
             rows="5"
             required
           ></textarea>
-        </div>
-
-        <div class="mb-4">
-          <input
-            type="text"
-            id="name"
-            name="name"
-            class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed"
-            placeholder="Name*"
-            required
-          />
-        </div>
-        <div class="mb-4">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed"
-            placeholder="Email*"
-            required
-          />
-        </div>
-        <div class="mb-4">
-          <input
-            type="text"
-            id="website"
-            name="website"
-            class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed"
-            placeholder="Website"
-          />
         </div>
       </div>
       <div class="flex justify-end">
         <button
           type="submit"
-          class="py-4 px-6 bg-blue-950 text-white rounded-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-800"
+          class="w-full bg-yellow-600 text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
         >
-          Post Comment →
+          Enviar →
         </button>
       </div>
     </form>
   </div>
-</main>
+</div>

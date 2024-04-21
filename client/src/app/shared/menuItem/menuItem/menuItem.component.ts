@@ -6,8 +6,6 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './menuItem.component.html',
-  styleUrl: './menuItem.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MenuItemComponent {
   @Input() title = '';

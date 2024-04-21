@@ -1,6 +1,7 @@
 const { User, PQR } = require("../db");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
+const axios = require("axios");
 
 const createUser = async (
   nombre1,
@@ -11,9 +12,9 @@ const createUser = async (
   numeroDocumento,
   nacimiento,
   paisOrigen,
-  ciudadOrigen,
   telefono,
-  email
+  email,
+  contrasena
 ) => {
   try {
     const filteredByEmail = await User.findAll({
@@ -35,17 +36,17 @@ const createUser = async (
       return "Este numero de documento ya se encuentra registrado";
     } else {
       await User.create({
-        nombre1: nombre1,
-        nombre2: nombre2,
-        apellido1: apellido1,
-        apellido2: apellido2,
-        tipoDocumento: tipoDocumento,
-        numeroDocumento: numeroDocumento,
-        nacimiento: nacimiento,
-        paisOrigen: paisOrigen,
-        ciudadOrigen: ciudadOrigen,
-        telefono: telefono,
-        email: email,
+        nombre1,
+        nombre2,
+        apellido1,
+        apellido2,
+        tipoDocumento,
+        numeroDocumento,
+        nacimiento,
+        paisOrigen,
+        telefono,
+        email,
+        contrasena,
       });
       return "Usuario creado correctamente";
     }
@@ -53,6 +54,36 @@ const createUser = async (
     throw new Error(error.message);
   }
 }; //OK
+
+const updatingUser = async (id, telefono, email, contrasena, activo) => {
+  try {
+    const userUpdated = await User.update(
+      {
+        email: email,
+        telefono: telefono,
+        contrasena: contrasena,
+        activo: activo,
+      },
+      {
+        where: { id: id },
+      }
+    );
+    return userUpdated;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const findUser = async (email) => {
+  try {
+    const userInfo = await User.findAll({
+      where: { email: email },
+    });
+    return userInfo;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
 const createPQR = async (UserId, tipo, prioridad, contenido) => {
   try {
@@ -90,15 +121,14 @@ const deletingPQR = async (id) => {
   }
 };
 
-const updatingUser = async (id, telefono, email, activo) => {
+const getAirportsApi = async () => {
   try {
-    const userUpdated = await User.update(
-      { email: email, telefono: telefono, activo: activo },
-      {
-        where: { id: id },
-      }
-    );
-    return userUpdated;
+    const URL =
+      "https://api.flightstats.com/flex/airports/rest/v1/json/active?appId=a5acbf5a&appKey=+5805db2da41737a91f5902ef86775419";
+
+    const { data } = await axios.get(URL);
+
+    return data;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -108,6 +138,8 @@ module.exports = {
   createUser,
   createPQR,
   findPQR,
+  findUser,
   deletingPQR,
   updatingUser,
+  getAirportsApi,
 };

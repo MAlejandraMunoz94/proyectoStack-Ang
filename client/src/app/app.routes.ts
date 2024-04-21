@@ -4,7 +4,7 @@ import { PQRSComponent } from './solicitudes/PQRS.component';
 import { PaginaVerTodosComponent } from './solicitudes/paginaVerTodos/paginaVerTodos.component';
 import { PaginaCrearComponent } from './solicitudes/paginaCrear/paginaCrear.component';
 import { MainComponentComponent } from './main/main.component';
-import { UserMenuComponent } from './userMenu/userMenu.component';
+import { UserSettingsComponent } from './userSettings/userSettings.component';
 import { LogInComponent } from './logIn/logIn.component';
 import { RegisterComponent } from './logIn/register/register.component';
 import { LogInFormComponent } from './logIn/logInForm/logInForm.component';
@@ -67,7 +67,9 @@ export const routes: Routes = [
   {
     path: 'settings',
     loadComponent: () =>
-      import('./userMenu/userMenu.component').then((c) => UserMenuComponent),
+      import('./userSettings/userSettings.component').then(
+        (c) => UserSettingsComponent
+      ),
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];

@@ -1,20 +1,35 @@
-<div
-  class="flex bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-black"
->
-  <app-side-menu />
+@if(userSesion.sesion){
+<div class="flex bg-slate-100 w-full h-full">
+  <div class="text-slate-300 selection:bg-blue-600 selection:text-white">
+    <app-side-menu />
+  </div>
 
-  <div class="w-full bg-slate-100 items-center justify-center">
-    <div class="flex w-screen bg-gray-800 justify-center">
-      @for (option of options ; track option.title){
-      <div class="flex w-full">
-        <app-pestana [routerLink]="option.path" name="{{ option.name }}" />
+  <div class="w-full h-full items-center justify-center">
+    <div>
+      <app-header></app-header>
+      <div class="md:flex md:justify-center py-4">
+        <h2 class="text-3xl font-semibold text-gray-800">
+          Selecciona la acción que deseas realizar
+        </h2>
       </div>
-
-      }
+      <div class="items-center justify-center max-w-5xl px-6 mx-auto">
+        <div class="grid gap-8 mt-10 md:grid-cols-2 lg:grid-cols-2">
+          @for (option of options ; track option.title){
+          <app-pestana
+            [routerLink]="option.path"
+            routerLinkActive="bg-white"
+            name="{{ option.name }}"
+            descripcion="{{ option.descripcion }}"
+          />
+          }
+        </div>
+      </div>
+    </div>
+    <div class="w-full h-full">
+      <router-outlet />
     </div>
   </div>
-
-  <div class="w-screen">
-    <router-outlet />
-  </div>
 </div>
+} @else {
+{{ goLogin() }}
+}

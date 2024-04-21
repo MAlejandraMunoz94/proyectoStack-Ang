@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { SideMenuComponent } from '../shared/sideMenu/sideMenu.component';
 import { PaginaCrearComponent } from './paginaCrear/paginaCrear.component';
 import { PaginaVerTodosComponent } from './paginaVerTodos/paginaVerTodos.component';
 import { PestañaComponent } from '../shared/pestaña/pestaña.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { HeaderComponent } from '../shared/header/header.component';
+import { userSesion } from '../store/user.store';
 
 @Component({
   selector: 'app-pqrs',
@@ -13,6 +15,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule,
     SideMenuComponent,
+    HeaderComponent,
     PestañaComponent,
     PaginaCrearComponent,
     PaginaVerTodosComponent,
@@ -23,10 +26,25 @@ import { RouterModule } from '@angular/router';
 export class PQRSComponent {
   options = [
     {
+      path: '/PQRS/myPQRS',
+      title: 'MyPQRS',
+      name: 'Mis solicitudes',
+      descripcion: 'Visualiza las solicitudes realizadas',
+    },
+    {
       path: '/PQRS/createPQR',
       title: 'CreatePQR',
-      name: 'Gestiona tu solicitud',
+      name: 'Gestiona tus solicitudes',
+      descripcion: 'Crea nuevas solicitudes',
     },
-    { path: '/PQRS/myPQRS', title: 'MyPQRS', name: 'Mis solicitudes' },
   ];
+  router = inject(Router);
+
+  get userSesion() {
+    return userSesion();
+  }
+
+  goLogin() {
+    this.router.navigate(['/logIn']);
+  }
 }

@@ -3,9 +3,9 @@ import { Component } from '@angular/core';
 import { SideMenuComponent } from '../shared/sideMenu/sideMenu.component';
 
 @Component({
-  selector: 'app-user-menu',
+  selector: 'app-user-settings',
   standalone: true,
   imports: [CommonModule, SideMenuComponent],
-  templateUrl: 'userMenu.component.html',
+  templateUrl: 'userSettings.component.html',
 })
-export class UserMenuComponent {}
+export class UserSettingsComponent {}

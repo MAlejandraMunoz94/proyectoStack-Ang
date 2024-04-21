@@ -1,48 +1,49 @@
-<div class="max-w-md w-full p-6">
+<div>
   <div class="flex flex-col lg:flex-row max-w-md w-full bg-gray-800">
     <app-logo />
   </div>
-  <h1 class="text-3xl font-semibold mb-6 text-gray-800 text-center p-6">
-    Inicia Sesion
+  <h1 class="text-3xl font-semibold text-gray-800 text-center p-2">
+    Inicia Sesión
   </h1>
-  <h1 class="text-sm font-semibold mb-6 text-gray-500 text-center">
+  <h1 class="text-sm font-semibold text-gray-500 text-center p-2">
     Si viajas mucho o si viajas poco, este club esta hecho para ti
   </h1>
 
-  <form action="#" method="POST" class="space-y-4">
-    <!-- Your form elements go here -->
-    <div>
-      <label for="email" class="block text-sm font-medium text-gray-700"
-        >Email</label
-      >
-      <input
-        type="text"
-        id="email"
-        name="email"
-        class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
-      />
-    </div>
-    <div>
-      <label for="password" class="block text-sm font-medium text-gray-700"
-        >Contraseña</label
-      >
-      <input
-        type="password"
-        id="password"
-        name="password"
-        class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
-      />
-    </div>
-    <div>
-      <button
-        type="submit"
-        class="w-full bg-yellow-600 text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
-      >
-        Sign In
-      </button>
-    </div>
+  <form
+    [formGroup]="logInData"
+    (ngSubmit)="logInFormSubmit()"
+    class="space-y-4"
+  >
+    <label for="email" class="block text-sm font-medium text-gray-700"
+      >Email</label
+    >
+    <input
+      type="email"
+      id="email"
+      name="email"
+      class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+      formControlName="email"
+    />
+
+    <label for="password" class="block text-sm font-medium text-gray-700"
+      >Contraseña</label
+    >
+    <input
+      type="password"
+      id="password"
+      name="password"
+      class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+      formControlName="password"
+    />
+
+    <button
+      type="submit"
+      class="w-full bg-yellow-600 text-white p-2 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
+    >
+      Sign In
+    </button>
   </form>
-  <div class="mt-4 text-sm text-gray-600 text-center">
+  <div class="mt-4 text-sm text-gray-600 dark:text-gray-300 text-center">
     <p>
       Eres nuevo por aqui?
       <a class="text-yellow-600 hover:underline" routerLink="/logIn/register"
