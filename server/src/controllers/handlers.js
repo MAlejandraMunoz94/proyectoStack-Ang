@@ -45,10 +45,10 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { telefono, email, contrasena, activo } = req.body;
+  const { telefono, contrasena, activo } = req.body;
 
   try {
-    await updatingUser(id, telefono, email, contrasena, activo);
+    await updatingUser(id, telefono, contrasena, activo);
     res.status(200).json("Informacion actualizada");
   } catch (error) {
     res.status(400).json({ error: error.message });

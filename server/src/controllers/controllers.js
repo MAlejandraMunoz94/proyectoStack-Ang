@@ -55,11 +55,10 @@ const createUser = async (
   }
 }; //OK
 
-const updatingUser = async (id, telefono, email, contrasena, activo) => {
+const updatingUser = async (id, telefono, contrasena, activo) => {
   try {
     const userUpdated = await User.update(
       {
-        email: email,
         telefono: telefono,
         contrasena: contrasena,
         activo: activo,

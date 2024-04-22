@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { LogoComponent } from '../../shared/logo/logo.component';
 import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { VerificateService } from '../../services/verificate.service';
+import { UserService } from '../../services/user.service';
 import { User } from '../../interfaces/user';
 import { userSesion } from '../../store/user.store';
 
@@ -14,17 +14,19 @@ import { userSesion } from '../../store/user.store';
   templateUrl: 'logInForm.component.html',
 })
 export class LogInFormComponent {
+  autenticate = true;
   logInData = new FormGroup({
     email: new FormControl(),
     password: new FormControl(),
   });
   userLogs = signal<User[]>([]);
 
-  public verificateService = inject(VerificateService);
+  public userServices = inject(UserService);
   public router = inject(Router);
 
-  validatePassword() {
+  validateUser() {
     if (
+      this.userLogs()[0].activo &&
       this.logInData.value.email == this.userLogs()[0].email &&
       this.logInData.value.password == this.userLogs()[0].contrasena
     ) {
@@ -33,17 +35,15 @@ export class LogInFormComponent {
       this.router.navigate(['/home']);
       console.log(userSesion());
     } else {
-      window.alert('Incorrecto');
+      this.autenticate = false;
     }
   }
 
   logInFormSubmit() {
-    this.verificateService
-      .getUser(this.logInData.value.email)
-      .subscribe((user) => {
-        this.userLogs.set(user);
-        this.validatePassword();
-      });
+    this.userServices.getUser(this.logInData.value.email).subscribe((user) => {
+      this.userLogs.set(user);
+      this.validateUser();
+    });
   }
 
   constructor() {}

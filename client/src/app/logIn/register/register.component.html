@@ -13,7 +13,7 @@
     class="w-full flex-cols"
   >
     <label for="firstName" class="block text-sm font-medium text-gray-700"
-      >Primer Nombre:</label
+      >Primer Nombre*:</label
     >
     <input
       type="text"
@@ -24,7 +24,7 @@
     />
 
     <label for="secondName" class="block text-sm font-medium text-gray-700"
-      >Segundo Nombre:</label
+      >Segundo Nombre*:</label
     >
     <input
       type="text"
@@ -35,7 +35,7 @@
     />
 
     <label for="lastName1" class="block text-sm font-medium text-gray-700"
-      >Apellido paterno:</label
+      >Apellido paterno*:</label
     >
     <input
       type="text"
@@ -57,7 +57,7 @@
     />
 
     <label for="country" class="block text-sm font-medium text-gray-700"
-      >Pais:</label
+      >Pais*:</label
     >
     <select
       id="country"
@@ -71,7 +71,7 @@
     </select>
 
     <label for="birthday" class="block text-sm font-medium text-gray-700"
-      >Fecha de nacimiento:</label
+      >Fecha de nacimiento*:</label
     >
     <input
       type="date"
@@ -82,7 +82,7 @@
     />
 
     <label for="typeID" class="block text-sm font-medium text-gray-700"
-      >Tipo de documento:</label
+      >Tipo de documento*:</label
     >
     <select
       id="typeID"
@@ -96,7 +96,7 @@
     </select>
 
     <label for="numID" class="block text-sm font-medium text-gray-700"
-      >Numero de documento:</label
+      >Numero de documento*:</label
     >
     <input
       type="text"
@@ -118,7 +118,7 @@
     />
 
     <label for="email" class="block text-sm font-medium text-gray-700"
-      >Email:</label
+      >Email*:</label
     >
     <input
       type="email"
@@ -129,7 +129,7 @@
     />
 
     <label for="password" class="block text-sm font-medium text-gray-700"
-      >Contraseña:</label
+      >Contraseña*:</label
     >
     <input
       type="password"
@@ -138,6 +138,15 @@
       class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
       formControlName="contrasena"
     />
+    <label class="block text-sm font-medium text-gray-700"
+      >(*) = Campo requerido
+    </label>
+
+    @if(!verificate.value){
+    <h1 class="text-sm font-semibold text-red-500 text-center p-2">
+      {{ verificate.message }}
+    </h1>
+    }
 
     <button
       type="submit"

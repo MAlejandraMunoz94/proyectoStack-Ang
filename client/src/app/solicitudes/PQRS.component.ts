@@ -46,5 +46,6 @@ export class PQRSComponent {
 
   goLogin() {
     this.router.navigate(['/logIn']);
+    console.log(userSesion().sesion);
   }
 }

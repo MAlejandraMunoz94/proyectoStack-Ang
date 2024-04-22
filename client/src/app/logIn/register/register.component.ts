@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LogoComponent } from '../../shared/logo/logo.component';
 import {
   FormControl,
@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { UtilsService } from '../../services/utils.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -18,8 +19,11 @@ import { UtilsService } from '../../services/utils.service';
 })
 export class RegisterComponent {
   utilsService = inject(UtilsService);
+  userServices = inject(UserService);
+  router = inject(Router);
   paises = this.utilsService.getPaises();
   tiposDeDocumento = this.utilsService.getTiposID();
+  verificate = { value: true, message: '' };
 
   registerDataForm = new FormGroup({
     nombre1: new FormControl('', [
@@ -62,8 +66,22 @@ export class RegisterComponent {
   });
 
   registerFormSubmit() {
-    console.log(this.registerDataForm.errors);
-    console.log(this.registerDataForm.valid);
-    window.alert(this.registerDataForm.value.email);
+    if (this.registerDataForm.valid) {
+      this.userServices
+        .postUser(this.registerDataForm.value)
+        .subscribe((response) => {
+          if (response == 'Usuario creado correctamente') {
+            window.alert(response);
+            this.router.navigate(['/logIn']);
+          } else {
+            this.verificate = { value: false, message: response };
+          }
+        });
+    } else {
+      this.verificate = {
+        value: false,
+        message: 'Complete todos los campos requeridos (*)',
+      };
+    }
   }
 }

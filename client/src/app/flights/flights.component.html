@@ -20,14 +20,8 @@
           name="Pais"
           class="dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
-          @if(airportsResult|async; as resultObject){ @for (item of
-          resultObject.airports; track item.countryName){
-          <option>{{ item.countryName }}</option>
-          } } @else {
           <option>Cargando opciones ...</option>
-          }
         </select>
-
         <label for="ciudad" class="text-sm font-medium text-gray-700"
           >Selecciona la ciudad:</label
         >
@@ -36,12 +30,7 @@
           name="Ciudad"
           class="dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
-          @if(airportsResult|async; as resultObject){ @for (item of
-          resultObject.airports; track item.city){
-          <option>{{ item.city }}</option>
-          } } @else {
           <option>Cargando opciones ...</option>
-          }
         </select>
 
         <button
@@ -51,16 +40,11 @@
         </button>
       </div>
       <div class="text-black w-full">
-        @if(airportsResult|async; as resultObject){ @for (item of
-        resultObject.airports; track item.iata){
-        <app-airport [aeropuerto]="item" />
-        } } @else {
         <div>Aun no se ha cargado</div>
-        }
       </div>
     </div>
   </div>
 </div>
-} @else {
+}@else {
 {{ goLogin() }}
 }
