@@ -6,6 +6,7 @@ const {
   deletingPQR,
   updatingUser,
   getAirportsApi,
+  getAirportsCityCode,
 } = require("./controllers");
 
 const registerUser = async (req, res) => {
@@ -45,11 +46,17 @@ const registerUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  const { telefono, contrasena, activo } = req.body;
+  const { email, telefono, contrasena, activo } = req.body;
 
   try {
-    await updatingUser(id, telefono, contrasena, activo);
-    res.status(200).json("Informacion actualizada");
+    const responseUpdate = await updatingUser(
+      id,
+      email,
+      telefono,
+      contrasena,
+      activo
+    );
+    res.status(200).json(responseUpdate);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -74,11 +81,12 @@ const getUserInfo = async (req, res) => {
 };
 
 const registerPQR = async (req, res) => {
-  const { UserId, tipo, prioridad, contenido } = req.body;
+  const { UserId } = req.params;
+  const { tipo, prioridad, contenido } = req.body;
 
   try {
-    const responsePQR = await createPQR(UserId, tipo, prioridad, contenido);
-    res.status(200).json(responsePQR);
+    await createPQR(UserId, tipo, prioridad, contenido);
+    res.status(200).json("Solicitud registrada correctamente");
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -125,6 +133,16 @@ const getAirports = async (req, res) => {
   }
 };
 
+const getAirportsByCity = async (req, res) => {
+  const { code } = req.params;
+  try {
+    const responseAirports = await getAirportsCityCode(code);
+    res.status(200).json(responseAirports);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   registerUser,
   getUserInfo,
@@ -133,4 +151,5 @@ module.exports = {
   getPQRSByUser,
   deletePQR,
   getAirports,
+  getAirportsByCity,
 };

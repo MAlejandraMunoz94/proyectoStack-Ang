@@ -16,31 +16,46 @@
           >Selecciona el pais:</label
         >
         <select
-          id="paisAir"
+          [(ngModel)]="countrySelected"
+          (change)="getCityOptions(countrySelected)"
+          id="pais"
           name="Pais"
           class="dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
-          <option>Cargando opciones ...</option>
+          @for(country of countryOptions(); track country.countryCode){
+          <option>
+            {{ country.country }}
+          </option>
+          }
         </select>
+
         <label for="ciudad" class="text-sm font-medium text-gray-700"
           >Selecciona la ciudad:</label
         >
         <select
-          id="ciudadAir"
+          [(ngModel)]="citySelected"
+          id="ciudad"
           name="Ciudad"
           class="dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
         >
-          <option>Cargando opciones ...</option>
+          @for(ciudad of cityOptions(); track ciudad.cityCode){
+          <option value="{{ ciudad.cityCode }}">
+            {{ ciudad.city }}
+          </option>
+          }
         </select>
 
         <button
+          (click)="getAirportsByCity(citySelected)"
           class="bg-yellow-600 text-white p-1 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
         >
           Buscar Aeropuertos
         </button>
       </div>
       <div class="text-black w-full">
-        <div>Aun no se ha cargado</div>
+        @for( airport of cityAirports().airports; track airport.iata){
+        <p>{{ airport.name }} {{ airport.iata }}</p>
+        }
       </div>
     </div>
   </div>

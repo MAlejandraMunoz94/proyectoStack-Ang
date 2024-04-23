@@ -1,0 +1,25 @@
+<div class="relative bg-white py-6 px-6 rounded-3xl w-60 h-60 my-2 shadow-xl">
+  <div>
+    @switch (pqr.tipo) { @case("Peticion") {<app-svg-pqr color="yellow" />}
+    @case("Queja"){<app-svg-pqr color="pink" />}
+    @case("Sugerencia"){<app-svg-pqr color="blue" />}
+    @case("Felicitacion"){<app-svg-pqr color="green" />} }
+  </div>
+
+  <div class="mt-8">
+    <p class="text-xl font-semibold my-2">{{ pqr.tipo }}</p>
+
+    <div class="space-x-2 text-gray-400 text-sm my-3">
+      <p>Contenido: {{ pqr.contenido }}</p>
+    </div>
+
+    <div class="flex justify-between">
+      <div class="my-2">
+        <p class="font-semibold text-base mb-2">Estado: {{ pqr.estado }}</p>
+        <p class="space-x-2 text-gray-400 text-sm my-3 font-text-base mb-2">
+          {{ pqr.createdAt | date }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

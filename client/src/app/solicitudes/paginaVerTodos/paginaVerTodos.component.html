@@ -1,0 +1,9 @@
+<div class="flex h-full w-full items-center justify-center">
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"
+  >
+    @for ( pqr of userPQRS(); track pqr.id){
+    <app-pqr-card [pqr]="pqr" />
+    }
+  </div>
+</div>

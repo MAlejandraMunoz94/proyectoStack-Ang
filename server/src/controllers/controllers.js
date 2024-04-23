@@ -19,14 +19,14 @@ const createUser = async (
   try {
     const filteredByEmail = await User.findAll({
       where: {
-        email: { [Op.iLike]: `%${email}%` },
+        email: email,
       },
     });
 
     const filteredByNumID = await User.findAll({
       where: {
         tipoDocumento: tipoDocumento,
-        numeroDocumento: { [Op.iLike]: `%${numeroDocumento}%` },
+        numeroDocumento: numeroDocumento,
       },
     });
 
@@ -55,19 +55,45 @@ const createUser = async (
   }
 }; //OK
 
-const updatingUser = async (id, telefono, contrasena, activo) => {
+const updatingUser = async (id, email, telefono, contrasena, activo) => {
   try {
-    const userUpdated = await User.update(
-      {
-        telefono: telefono,
-        contrasena: contrasena,
-        activo: activo,
-      },
-      {
-        where: { id: id },
-      }
-    );
-    return userUpdated;
+    let filteredByEmail = [];
+    let filteredByTelephone = [];
+
+    if (email) {
+      filteredByEmail = await User.findAll({
+        where: {
+          email: email,
+        },
+      });
+    }
+
+    if (telefono) {
+      filteredByTelephone = await User.findAll({
+        where: {
+          telefono: telefono,
+        },
+      });
+    }
+
+    if (filteredByEmail.length > 0) {
+      return "El correo proporcionado ya se encuentra registrado";
+    } else if (filteredByTelephone.length > 0) {
+      return "El telefono proporcionado ya se encuentra registrado";
+    } else {
+      await User.update(
+        {
+          email: email,
+          telefono: telefono,
+          contrasena: contrasena,
+          activo: activo,
+        },
+        {
+          where: { id: id },
+        }
+      );
+      return "Información actualizada correctamente";
+    }
   } catch (error) {
     throw new Error(error.message);
   }
@@ -133,6 +159,17 @@ const getAirportsApi = async () => {
   }
 };
 
+const getAirportsCityCode = async (code) => {
+  try {
+    const URL = `https://api.flightstats.com/flex/airports/rest/v1/json/cityCode/${code}?appId=a5acbf5a&appKey=+5805db2da41737a91f5902ef86775419`;
+
+    const { data } = await axios.get(URL);
+    return data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 module.exports = {
   createUser,
   createPQR,
@@ -141,4 +178,5 @@ module.exports = {
   deletingPQR,
   updatingUser,
   getAirportsApi,
+  getAirportsCityCode,
 };

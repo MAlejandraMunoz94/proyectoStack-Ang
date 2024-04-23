@@ -1,5 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  signal,
+} from '@angular/core';
 import { SideMenuComponent } from '../shared/sideMenu/sideMenu.component';
 import { UserService } from '../services/user.service';
 import { userSesion } from '../store/user.store';
@@ -20,6 +25,7 @@ import {
 })
 export class UserSettingsComponent {
   userNewData = new FormGroup({
+    email: new FormControl('', [Validators.email]),
     telefono: new FormControl('', [
       Validators.maxLength(20),
       Validators.minLength(7),
@@ -29,29 +35,71 @@ export class UserSettingsComponent {
       Validators.maxLength(20),
     ]),
   });
-  updated = { value: false, message: '' };
+  updated = signal({ value: false, color: '', message: '' });
   userServices = inject(UserService);
   router = inject(Router);
 
   get userSesion() {
+    return userSesion();
+  }
+  get userSesionData() {
     return userSesion().userData[0];
   }
+
+  goLogIn() {
+    this.router.navigate(['/logIn']);
+  }
+
   unsuscribeUser() {
     this.userServices
-      .updateUser(this.userSesion.id, { activo: false })
+      .updateUser(this.userSesionData.id, { activo: false })
       .subscribe((response) => {
         window.alert(response);
         userSesion.set({ sesion: false, userData: [] });
-        this.router.navigate(['/logIn']);
       });
   }
 
-  updateUser() {
-    console.log(this.userNewData.value);
+  updateUser(info: {}) {
     this.userServices
-      .updateUser(this.userSesion.id, this.userNewData.value)
+      .updateUser(this.userSesionData.id, info)
       .subscribe((response) => {
-        this.updated = { value: true, message: response };
+        if (response == 'Información actualizada correctamente') {
+          this.updated.set({ value: true, color: 'blue', message: response });
+        } else {
+          this.updated.set({ value: true, color: 'red', message: response });
+        }
       });
+  }
+
+  verificateNewData() {
+    let info = {};
+    let value = this.userNewData.value;
+    if (value.email == '' && value.contrasena == '' && value.telefono == '') {
+      this.updated.set({
+        value: true,
+        color: 'red',
+        message: 'Debe proporcionar la información a actualizar',
+      });
+    } else if (
+      value.email != '' &&
+      value.contrasena != '' &&
+      value.telefono != ''
+    ) {
+      this.updateUser(value);
+    } else {
+      if (value.email != '') {
+        info = { ...info, email: value.email };
+      }
+
+      if (value.contrasena != '') {
+        info = { ...info, contrasena: value.contrasena };
+      }
+
+      if (value.telefono != '') {
+        info = { ...info, telefono: value.telefono };
+      }
+
+      this.updateUser(info);
+    }
   }
 }

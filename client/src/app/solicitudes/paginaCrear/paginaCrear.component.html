@@ -1,11 +1,9 @@
 <div class="flex w-full h-full items-center justify-center">
-  <div
-    class="max-w-7xl dark:bg-gray-800 dark:text-white items-center justify-center"
-  >
+  <div class="max-w-7xl items-center justify-center">
     <form
+      [formGroup]="pqrForm"
+      (ngSubmit)="pqrCreatePriority()"
       class="w-full p-4 rounded shadow-md"
-      action="/submit-comment"
-      method="post"
     >
       <h2
         class="text-xl mb-4 font-medium tracking-wider font-lighter text-gray-800 dark:text-gray-200"
@@ -21,8 +19,8 @@
         <div class="mb-4 col-span-1 md:col-span-3">
           <div class="mb-4">
             <select
+              formControlName="tipo"
               class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed"
-              required
             >
               <option>Peticion</option>
               <option>Queja</option>
@@ -33,11 +31,21 @@
           <textarea
             id="comment"
             name="comment"
+            formControlName="contenido"
             class="w-full px-3 py-2 dark:bg-gray-900 rounded-sm border dark:border-none border-gray-300 focus:outline-none border-solid focus:border-dashed"
             placeholder="Detalle su solicitud ..."
-            rows="5"
-            required
+            rows="8"
           ></textarea>
+
+          @if(created().value){
+          <h1
+            class="text-sm font-semibold text-{{
+              created().color
+            }}-500 text-center p-2"
+          >
+            {{ created().message }}
+          </h1>
+          }
         </div>
       </div>
       <div class="flex justify-end">

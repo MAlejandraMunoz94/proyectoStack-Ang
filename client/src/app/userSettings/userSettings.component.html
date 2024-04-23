@@ -1,3 +1,4 @@
+@if(userSesion.sesion){
 <div
   class="flex bg-slate-100 overflow-y-scroll w-screen h-screen antialiased text-slate-300 selection:bg-blue-600 selection:text-white"
 >
@@ -36,9 +37,34 @@
           </div>
           <form
             [formGroup]="userNewData"
-            (ngSubmit)="updateUser()"
+            (ngSubmit)="verificateNewData()"
             class="p-4 mx-2"
           >
+            <div class="pb-6">
+              <label for="email" class="font-semibold text-gray-800 block pb-1"
+                >Nuevo correo electronico</label
+              >
+
+              <input
+                formControlName="email"
+                id="email"
+                class="mt-1 p-2 w-full border rounded-md bg-slate-100 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                type="text"
+              />
+            </div>
+
+            <div class="pb-6">
+              <label for="about" class="font-semibold text-gray-800 block pb-1"
+                >Nueva contraseña</label
+              >
+              <input
+                formControlName="contrasena"
+                id="contrasena"
+                class="mt-1 p-2 w-full border rounded-md bg-slate-100 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                type="text"
+              />
+            </div>
+
             <div class="pb-6">
               <label
                 for="telefono"
@@ -49,35 +75,33 @@
               <input
                 formControlName="telefono"
                 id="telefono"
-                class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
+                class="mt-1 p-2 w-full border rounded-md bg-slate-100 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
                 type="text"
               />
             </div>
-            <div class="pb-4">
-              <label for="about" class="font-semibold text-gray-800 block pb-1"
-                >Nueva contraseña</label
-              >
-              <input
-                formControlName="contrasena"
-                id="contrasena"
-                class="mt-1 p-2 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
-                type="text"
-              />
-              @if(updated.value){
-              <h1 class="text-sm font-semibold text-blue-500 text-center p-2">
-                Se actualizó la información correctamente
-              </h1>
-              }
-              <button
-                type="submit"
-                class="w-full bg-yellow-600 text-white p-1 mt-4 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
-              >
-                Actualizar
-              </button>
-            </div>
+
+            @if(updated().value){
+            <h1
+              class="text-sm font-semibold text-{{
+                updated().color
+              }}-500 text-center p-2"
+            >
+              {{ updated().message }}
+            </h1>
+            }
+
+            <button
+              type="submit"
+              class="w-full bg-yellow-600 text-white p-1 mt-4 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
+            >
+              Actualizar
+            </button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+}@else{
+{{ goLogIn() }}
+}

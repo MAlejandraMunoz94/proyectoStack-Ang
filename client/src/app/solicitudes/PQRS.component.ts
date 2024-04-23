@@ -24,6 +24,7 @@ import { userSesion } from '../store/user.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PQRSComponent {
+  onNavigate = false;
   options = [
     {
       path: '/PQRS/myPQRS',

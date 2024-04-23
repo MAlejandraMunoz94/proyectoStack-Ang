@@ -9,7 +9,13 @@ import { AirportResult } from '../interfaces/airport';
 export class AirportsService {
   constructor(private http: HttpClient) {}
 
-  getAirports(): Observable<AirportResult> {
+  getAllAirports() {
     return this.http.get<AirportResult>('http://localhost:3001/airports');
+  }
+
+  getAirportByCity(cityCode: string) {
+    return this.http.get<AirportResult>(
+      'http://localhost:3001/airports/' + cityCode
+    );
   }
 }

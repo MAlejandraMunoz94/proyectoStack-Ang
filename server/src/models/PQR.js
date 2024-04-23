@@ -21,5 +21,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    estado: {
+      type: DataTypes.STRING,
+      defaultValue: "Recibida",
+    },
   });
 };

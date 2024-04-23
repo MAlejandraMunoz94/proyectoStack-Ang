@@ -8,6 +8,7 @@ const {
   updateUser,
   deletePQR,
   getAirports,
+  getAirportsByCity,
 } = require("../controllers/handlers");
 
 const router = Router();
@@ -22,9 +23,9 @@ const router = Router();
 router.post("/user", registerUser); //OK
 router.put("/user/:id", updateUser); // OK
 router.get("/user/:email", getUserInfo);
-router.post("/PQR", registerPQR); //OK
+router.post("/PQR/:UserId", registerPQR); //OK
 router.get("/PQR/:UserId", getPQRSByUser); // OK
 router.delete("/PQR/:id", deletePQR); //ok
 router.get("/airports", getAirports); // ok API
-
+router.get("/airports/:code", getAirportsByCity);
 module.exports = router;
