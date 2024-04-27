@@ -26,7 +26,7 @@ export class PaginaCrearComponent {
   pqrService = inject(PqrsService);
 
   get userSesion() {
-    return userSesion().userData[0];
+    return userSesion().userData;
   }
 
   pqrCreatePriority() {

@@ -15,4 +15,8 @@ export class PqrsService {
   getPQR(id: string) {
     return this.http.get<PqrsBBDD[]>('http://localhost:3001/PQR/' + id);
   }
+
+  deletePQR(id: string) {
+    return this.http.delete<string>('http://localhost:3001/PQR/' + id);
+  }
 }

@@ -17,22 +17,22 @@ const createUser = async (
   contrasena
 ) => {
   try {
-    const filteredByEmail = await User.findAll({
+    const filteredByEmail = await User.findOne({
       where: {
         email: email,
       },
     });
 
-    const filteredByNumID = await User.findAll({
+    const filteredByNumID = await User.findOne({
       where: {
         tipoDocumento: tipoDocumento,
         numeroDocumento: numeroDocumento,
       },
     });
 
-    if (filteredByEmail.length > 0) {
+    if (filteredByEmail) {
       return "Este correo electronico ya se encuentra registrado";
-    } else if (filteredByNumID.length > 0) {
+    } else if (filteredByNumID) {
       return "Este numero de documento ya se encuentra registrado";
     } else {
       await User.create({
@@ -57,11 +57,11 @@ const createUser = async (
 
 const updatingUser = async (id, email, telefono, contrasena, activo) => {
   try {
-    let filteredByEmail = [];
-    let filteredByTelephone = [];
+    let filteredByEmail = false;
+    let filteredByTelephone = false;
 
     if (email) {
-      filteredByEmail = await User.findAll({
+      filteredByEmail = await User.findOne({
         where: {
           email: email,
         },
@@ -69,16 +69,16 @@ const updatingUser = async (id, email, telefono, contrasena, activo) => {
     }
 
     if (telefono) {
-      filteredByTelephone = await User.findAll({
+      filteredByTelephone = await User.findOne({
         where: {
           telefono: telefono,
         },
       });
     }
 
-    if (filteredByEmail.length > 0) {
+    if (filteredByEmail) {
       return "El correo proporcionado ya se encuentra registrado";
-    } else if (filteredByTelephone.length > 0) {
+    } else if (filteredByTelephone) {
       return "El telefono proporcionado ya se encuentra registrado";
     } else {
       await User.update(
@@ -101,7 +101,7 @@ const updatingUser = async (id, email, telefono, contrasena, activo) => {
 
 const findUser = async (email) => {
   try {
-    const userInfo = await User.findAll({
+    const userInfo = await User.findOne({
       where: { email: email },
     });
     return userInfo;
@@ -148,20 +148,22 @@ const deletingPQR = async (id) => {
 
 const getAirportsApi = async () => {
   try {
-    const URL =
-      "https://api.flightstats.com/flex/airports/rest/v1/json/active?appId=a5acbf5a&appKey=+5805db2da41737a91f5902ef86775419";
+    const appId = "a5acbf5a";
+    const appKey = "+5805db2da41737a91f5902ef86775419";
+    const URL = `https://api.flightstats.com/flex/airports/rest/v1/json/active?appId=${appId}&appKey=${appKey}`;
 
     const { data } = await axios.get(URL);
-
     return data;
   } catch (error) {
     throw new Error(error.message);
   }
 };
 
-const getAirportsCityCode = async (code) => {
+const getFlightsCode = async (code, date, hour) => {
   try {
-    const URL = `https://api.flightstats.com/flex/airports/rest/v1/json/cityCode/${code}?appId=a5acbf5a&appKey=+5805db2da41737a91f5902ef86775419`;
+    const appId = "a5acbf5a";
+    const appKey = "5805db2da41737a91f5902ef86775419";
+    const URL = `https://api.flightstats.com/flex/flightstatus/rest/v2/json/airport/status/${code}/arr/${date}/${hour}?appId=${appId}&appKey=${appKey}&utc=false&numHours=1&maxFlights=10`;
 
     const { data } = await axios.get(URL);
     return data;
@@ -178,5 +180,5 @@ module.exports = {
   deletingPQR,
   updatingUser,
   getAirportsApi,
-  getAirportsCityCode,
+  getFlightsCode,
 };

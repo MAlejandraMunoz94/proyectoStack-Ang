@@ -1,6 +1,6 @@
 <div
   id="menu"
-  class="bg-gray-800 min-h-full z-10 text-slate-300 w-64 left-0 h-screen overflow-y-scroll"
+  class="bg-gray-800 min-h-full z-10 text-slate-300 w-64 left-0 h-screen overflow-hidden"
 >
   <app-logo></app-logo>
 
@@ -14,10 +14,11 @@
           alt=""
         />
       </span>
-      @if(userSesion){
+      @if(userSesion.sesion){
       <span class="text-sm md:text-base font-bold">
-        {{ userSesion.nombre1 }} {{ userSesion.nombre2 }}
-        {{ userSesion.apellido1 }}</span
+        {{ userSesionData.nombre1 | titlecase }}
+        {{ userSesionData.nombre2 | titlecase }}
+        {{ userSesionData.apellido1 | titlecase }}</span
       >
       }@else {<span class="text-sm md:text-base font-bold"> Usuario</span>}
     </a>

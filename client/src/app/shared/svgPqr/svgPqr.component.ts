@@ -1,16 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-svg-pqr',
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div
-      class="text-white flex items-center absolute rounded-full py-4 px-4 shadow-xl bg-{{
-        color
-      }}-500 left-4 -top-6"
-    >
+    <div class="{{ color }}">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="h-8 w-8"

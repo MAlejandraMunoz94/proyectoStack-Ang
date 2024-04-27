@@ -1,3 +1,4 @@
+@if(userSesion.sesion){
 <div class="flex bg-slate-100 w-full h-full">
   <div class="text-slate-300 selection:bg-blue-600 selection:text-white">
     <app-side-menu />
@@ -36,3 +37,4 @@
     </div>
   </div>
 </div>
+}@else { {{ goLogin() }} }

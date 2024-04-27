@@ -1,9 +1,17 @@
 <div class="flex h-full w-full items-center justify-center">
+  @if (userPQRS.length > 0){
   <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-2"
   >
-    @for ( pqr of userPQRS(); track pqr.id){
+    @for ( pqr of userPQRS; track pqr.id){
     <app-pqr-card [pqr]="pqr" />
     }
   </div>
+  } @else {
+  <div class="md:flex md:justify-center py-4">
+    <h2 class="text-3xl font-semibold text-gray-800">
+      No cuenta con solicitudes registradas
+    </h2>
+  </div>
+  }
 </div>

@@ -5,56 +5,117 @@
   </div>
   <div class="w-full h-full items-center justify-center">
     <div>
-      <app-header></app-header>
+      <app-header />
       <div class="md:flex md:justify-center py-4">
         <h2 class="text-3xl font-semibold text-gray-800">
           Verifica el estado actual de tus vuelos
         </h2>
       </div>
-      <div class="flex py-4 justify-center">
-        <label for="pais" class="text-sm font-medium text-gray-700"
-          >Selecciona el pais:</label
-        >
-        <select
-          [(ngModel)]="countrySelected"
-          (change)="getCityOptions(countrySelected)"
-          id="pais"
-          name="Pais"
-          class="dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-        >
-          @for(country of countryOptions(); track country.countryCode){
-          <option>
-            {{ country.country }}
-          </option>
-          }
-        </select>
+      <div class="flex py-4 px-4 justify-center">
+        <div>
+          <label for="pais" class="text-sm font-medium text-gray-700"
+            >Selecciona el pais:</label
+          >
+          <select
+            [(ngModel)]="countrySelected"
+            (change)="getCityOptions(countrySelected)"
+            id="pais"
+            name="Pais"
+            class="w-64 dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          >
+            @if(countryOptions().length){ @for(country of countryOptions();
+            track country){
+            <option>
+              {{ country }}
+            </option>
+            }}@else {
+            <option>Cargando Opciones ...</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="ciudad" class="text-sm font-medium text-gray-700"
+            >Selecciona la ciudad:</label
+          >
+          <select
+            [(ngModel)]="citySelected"
+            (change)="getAirportsByCity(citySelected)"
+            id="ciudad"
+            name="Ciudad"
+            class="w-64 dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          >
+            @if(cityOptions().length <1){ @for(ciudad of cityOptions(); track
+            ciudad.cityCode){
+            <option value="{{ ciudad.cityCode }}">
+              {{ ciudad.city }}
+            </option>
+            }}@else {
+            <option>Cargando Opciones ...</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="aeropuerto" class="text-sm font-medium text-gray-700"
+            >Selecciona el aeropuerto:</label
+          >
+          <select
+            [(ngModel)]="airportSelected"
+            id="aeropuerto"
+            name="Aeropuerto"
+            class="w-64 dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          >
+            @if(cityAirports().length){ @for( airport of cityAirports(); track
+            airport.iata){
+            <option value="{{ airport.iata }}">
+              {{ airport.name }}
+            </option>
+            }}@else{
+            <option>Cargando Opciones ...</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label for="fecha" class="text-sm font-medium text-gray-700"
+            >Selecciona la fecha y la hora:</label
+          >
+          <input
+            [(ngModel)]="dateSelected"
+            type="datetime-local"
+            id="fecha"
+            name="fecha"
+            class="w-64 dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
 
-        <label for="ciudad" class="text-sm font-medium text-gray-700"
-          >Selecciona la ciudad:</label
-        >
-        <select
-          [(ngModel)]="citySelected"
-          id="ciudad"
-          name="Ciudad"
-          class="dark:text-gray-200 dark:bg-gray-900 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
-        >
-          @for(ciudad of cityOptions(); track ciudad.cityCode){
-          <option value="{{ ciudad.cityCode }}">
-            {{ ciudad.city }}
-          </option>
-          }
-        </select>
+        @if(!valid.value){
+        <h1 class="text-sm font-semibold text-red-500 text-center p-2">
+          {{ valid.message }}
+        </h1>
+        }
 
         <button
-          (click)="getAirportsByCity(citySelected)"
+          (click)="getFlights()"
           class="bg-yellow-600 text-white p-1 rounded-md hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 transition-colors duration-300"
         >
-          Buscar Aeropuertos
+          Buscar vuelos
         </button>
       </div>
-      <div class="text-black w-full">
-        @for( airport of cityAirports().airports; track airport.iata){
-        <p>{{ airport.name }} {{ airport.iata }}</p>
+
+      <div>
+        @if(this.flightsByAirport().length){
+        <ul
+          role="list"
+          class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 px-4"
+        >
+          @for(flight of this.flightsByAirport(); track flight.flightId){
+          <app-flightCard [flight]="flight" />
+          }
+        </ul>
+        } @else {
+        <img
+          class="object-cover object-center w-full mt-16 rounded-md shadow h-80"
+          src="https://media.istockphoto.com/id/1432549106/es/foto/joven-viajera-pasajera-caminando-con-una-maleta-amarilla-en-la-moderna-terminal-del-aeropuerto.jpg?s=612x612&w=0&k=20&c=uI9XwSz7EkgFUzBG27Mce_3l5AZfcbFYI6G8zv_PxN0="
+        />
         }
       </div>
     </div>

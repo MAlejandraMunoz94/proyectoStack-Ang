@@ -19,21 +19,33 @@ export class LogInFormComponent {
     email: new FormControl(),
     password: new FormControl(),
   });
-  userLogs = signal<User[]>([]);
+  userLogs = signal<User>({
+    id: '',
+    nombre1: '',
+    nombre2: '',
+    apellido1: '',
+    apellido2: '',
+    tipoDocumento: '',
+    numeroDocumento: '',
+    nacimiento: new Date(),
+    paisOrigen: '',
+    telefono: '',
+    email: '',
+    contrasena: '',
+    activo: true,
+  });
 
   public userServices = inject(UserService);
   public router = inject(Router);
 
   validateUser() {
     if (
-      this.userLogs()[0].activo &&
-      this.logInData.value.email == this.userLogs()[0].email &&
-      this.logInData.value.password == this.userLogs()[0].contrasena
+      this.userLogs().activo &&
+      this.logInData.value.email == this.userLogs().email &&
+      this.logInData.value.password == this.userLogs().contrasena
     ) {
-      window.alert('Correcto');
       userSesion.set({ sesion: true, userData: this.userLogs() });
       this.router.navigate(['/home']);
-      console.log(userSesion());
     } else {
       this.autenticate = false;
     }

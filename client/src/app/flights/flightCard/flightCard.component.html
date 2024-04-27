@@ -1,0 +1,96 @@
+<li class="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
+  <div class="flex w-full items-center justify-between space-x-6 p-6">
+    <div class="flex-1 truncate">
+      <div class="flex items-center space-x-3">
+        <h3 class="truncate text-sm font-medium text-gray-900">
+          ✈️{{ flight.carrierFsCode }} {{ flight.flightNumber }}
+        </h3>
+        @switch (flight.status) { @case ("A"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          🟢Activo</span
+        >
+        } @case ("C"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          ⚠️Cancelado</span
+        >
+        } @case ("D"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          🟡Desviado</span
+        >
+        } @case ("DN"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          ⚪Sin informacion</span
+        >
+        } @case ("L"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          ⚫Aterrizado</span
+        >
+        } @case ("NO"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          🟠Fuera de servicio</span
+        >
+        } @case ("R"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          🟠Redirigido</span
+        >
+        } @case ("S"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          🔵Programado</span
+        >
+        } @case ("U"){<span
+          class="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-green-600/20"
+        >
+          ⚪Sin informacion</span
+        >
+        } } >
+      </div>
+      @if(flight.flightDurations.airMinutes){
+      <p class="mt-1 truncate text-sm text-gray-500">
+        🕒Duración: {{ flight.flightDurations.airMinutes }} minutos
+      </p>
+      }@else {
+      <p class="mt-1 truncate text-sm text-gray-500">
+        🕒Duración: {{ flight.flightDurations.scheduledAirMinutes }} minutos
+      </p>
+      }
+    </div>
+    <img
+      class="h-10 w-10 flex-shrink-0 rounded-full bg-gray-300"
+      src="https://imagenes.lainformacion.com/files/og_thumbnail_1900/uploads/imagenes/2019/11/28/5ddf2c8fb8e0d.jpeg"
+      alt=""
+    />
+  </div>
+  <div>
+    <div class="-mt-px flex divide-x divide-gray-200">
+      <div class="flex w-0 flex-1">
+        <a
+          class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+          >⬆️ {{ flight.departureAirportFsCode }}
+        </a>
+        <a
+          class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+          >{{ flight.departureDate.dateLocal }}
+        </a>
+      </div>
+      <div class="-ml-px flex w-0 flex-1">
+        <a
+          class="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+        >
+          ⬇️ {{ flight.arrivalAirportFsCode }}
+        </a>
+        <a
+          class="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+          >{{ flight.arrivalDate.dateLocal }}
+        </a>
+      </div>
+    </div>
+  </div>
+</li>

@@ -7,13 +7,15 @@ import {
   signal,
 } from '@angular/core';
 import { SideMenuComponent } from '../shared/sideMenu/sideMenu.component';
-import { AirportComponent } from './airport/airport.component';
 import { HeaderComponent } from '../shared/header/header.component';
 import { Router } from '@angular/router';
 import { userSesion } from '../store/user.store';
 import { AirportsService } from '../services/airports.service';
-import { AirportResult } from '../interfaces/airport';
+import { Airport, AirportResult } from '../interfaces/airport';
 import { FormsModule } from '@angular/forms';
+import { FlightsService } from '../services/flights.service';
+import { Airline, Flight } from '../interfaces/flight';
+import { FlightCardComponent } from './flightCard/flightCard.component';
 
 @Component({
   selector: 'app-flights',
@@ -22,43 +24,54 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     SideMenuComponent,
     HeaderComponent,
-    AirportComponent,
     FormsModule,
+    FlightCardComponent,
   ],
   templateUrl: './flights.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FlightsComponent implements OnInit {
   allAirports = signal<AirportResult>({ airports: [] });
-  countryOptions = signal([{ country: '', countryCode: '' }]);
-  cityOptions = signal([{ country: '', city: '', cityCode: '' }]);
+  cityAirports = signal<Airport[]>([]);
+  countryOptions = signal<string[]>([]);
+  cityOptions = signal([
+    {
+      country: '',
+      city: '',
+      cityCode: '',
+    },
+  ]);
+  flightsByAirport = signal<Flight[]>([]);
+  airlines = signal<Airline[]>([]);
   countrySelected!: string;
   citySelected!: string;
-  cityAirports = signal<AirportResult>({ airports: [] });
+  airportSelected!: string;
+  dateSelected!: string;
+  valid = { value: true, message: '' };
 
   router = inject(Router);
   airportsService = inject(AirportsService);
+  flightService = inject(FlightsService);
 
   get userSesion() {
     return userSesion();
   }
+
   goLogin() {
     this.router.navigate(['/logIn']);
   }
 
   getCountryOptions() {
     const airports = this.allAirports().airports;
-    let arrayCountries = airports.map((air) => {
-      return { country: air.countryName, countryCode: air.countryCode };
-    });
+    let arrayCountries = airports.map((air) => air.countryName);
 
-    let countries = [{ country: '', countryCode: '' }];
+    let countries = [''];
 
-    for (let i = 0; i < arrayCountries.length; i++) {
+    for (let i = 0; i <= arrayCountries.length; i++) {
       let aux = false;
 
-      for (let x = 0; x < countries.length; x++) {
-        if (arrayCountries[i].countryCode == countries[x].countryCode) {
+      for (let x = 0; x <= countries.length; x++) {
+        if (arrayCountries[i] == countries[x]) {
           aux = true;
         }
       }
@@ -67,7 +80,9 @@ export class FlightsComponent implements OnInit {
         countries = [...countries, arrayCountries[i]];
       }
     }
-    this.countryOptions.set(countries);
+    let countriesOptions = countries.sort().filter((c) => c != '');
+    console.log(countriesOptions);
+    this.countryOptions.set(countriesOptions);
   }
 
   getCityOptions(countrySelected: string) {
@@ -96,17 +111,47 @@ export class FlightsComponent implements OnInit {
       }
     }
 
-    let citiesByCountry = cities.filter(
-      (city) => city.country == countrySelected
-    );
+    let citiesByCountry = cities
+      .filter((city) => city.country == countrySelected)
+      .sort((a, b) => {
+        if (a.city < b.city) {
+          return -1;
+        }
+        if (a.city > b.city) {
+          return 1;
+        }
+        return 0;
+      });
 
+    console.log(citiesByCountry);
     this.cityOptions.set(citiesByCountry);
   }
 
   getAirportsByCity(citySelected: string) {
-    this.airportsService
-      .getAirportByCity(citySelected)
-      .subscribe((response) => this.cityAirports.set(response));
+    let airportsCity = this.allAirports().airports.filter(
+      (a) => a.cityCode == citySelected
+    );
+
+    this.cityAirports.set(airportsCity);
+  }
+
+  getFlights() {
+    if (this.dateSelected && this.airportSelected) {
+      let [date, time] = this.dateSelected.split('T');
+      let newDate = date.replaceAll('-', '/');
+      let newTime = time.slice(0, 2);
+
+      this.flightService
+        .getFlights(this.airportSelected, newDate, newTime)
+        .subscribe((response) => {
+          this.flightsByAirport.set(response.flightStatuses);
+          this.airlines.set(response.appendix.airlines);
+          console.log(this.flightsByAirport());
+          console.log(this.airlines());
+        });
+    } else {
+      this.valid = { value: false, message: 'Seleccione los datos necesarios' };
+    }
   }
 
   ngOnInit() {

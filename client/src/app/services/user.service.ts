@@ -10,7 +10,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUser(email: string) {
-    return this.http.get<User[]>('http://localhost:3001/user/' + email);
+    return this.http.get<User>('http://localhost:3001/user/' + email);
   }
 
   postUser(
@@ -37,6 +37,6 @@ export class UserService {
   }
 
   updateUser(id: string, info: {}) {
-    return this.http.put<string>('http://localhost:3001/user/' + id, info);
+    return this.http.patch<string>('http://localhost:3001/user/' + id, info);
   }
 }

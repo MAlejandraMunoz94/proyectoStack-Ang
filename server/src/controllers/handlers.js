@@ -6,7 +6,7 @@ const {
   deletingPQR,
   updatingUser,
   getAirportsApi,
-  getAirportsCityCode,
+  getFlightsCode,
 } = require("./controllers");
 
 const registerUser = async (req, res) => {
@@ -68,7 +68,7 @@ const getUserInfo = async (req, res) => {
   try {
     const response = await findUser(email);
 
-    if (response.length > 0) {
+    if (response) {
       res.status(200).json(response);
     } else {
       res
@@ -98,11 +98,7 @@ const getPQRSByUser = async (req, res) => {
   try {
     const response = await findPQR(UserId);
 
-    if (response.length > 0) {
-      res.status(200).json(response);
-    } else {
-      res.status(200).json("No cuenta con solicitudes registradas");
-    }
+    res.status(200).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -133,10 +129,10 @@ const getAirports = async (req, res) => {
   }
 };
 
-const getAirportsByCity = async (req, res) => {
-  const { code } = req.params;
+const getFlights = async (req, res) => {
+  const { code, date, hour } = req.query;
   try {
-    const responseAirports = await getAirportsCityCode(code);
+    const responseAirports = await getFlightsCode(code, date, hour);
     res.status(200).json(responseAirports);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -151,5 +147,5 @@ module.exports = {
   getPQRSByUser,
   deletePQR,
   getAirports,
-  getAirportsByCity,
+  getFlights,
 };

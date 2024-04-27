@@ -12,10 +12,4 @@ export class AirportsService {
   getAllAirports() {
     return this.http.get<AirportResult>('http://localhost:3001/airports');
   }
-
-  getAirportByCity(cityCode: string) {
-    return this.http.get<AirportResult>(
-      'http://localhost:3001/airports/' + cityCode
-    );
-  }
 }

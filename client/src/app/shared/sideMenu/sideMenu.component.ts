@@ -25,7 +25,10 @@ export class SideMenuComponent {
   public router = inject(Router);
 
   get userSesion() {
-    return userSesion().userData[0];
+    return userSesion();
+  }
+  get userSesionData() {
+    return userSesion().userData;
   }
 
   goHome() {
@@ -33,7 +36,24 @@ export class SideMenuComponent {
   }
 
   logOut() {
-    userSesion.set({ sesion: false, userData: [] });
+    userSesion.set({
+      sesion: false,
+      userData: {
+        id: '',
+        nombre1: '',
+        nombre2: '',
+        apellido1: '',
+        apellido2: '',
+        tipoDocumento: '',
+        numeroDocumento: '',
+        nacimiento: new Date(),
+        paisOrigen: '',
+        telefono: '',
+        email: '',
+        contrasena: '',
+        activo: true,
+      },
+    });
     this.router.navigate(['/logIn']);
   }
 }

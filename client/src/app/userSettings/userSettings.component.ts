@@ -43,7 +43,7 @@ export class UserSettingsComponent {
     return userSesion();
   }
   get userSesionData() {
-    return userSesion().userData[0];
+    return userSesion().userData;
   }
 
   goLogIn() {
@@ -53,9 +53,25 @@ export class UserSettingsComponent {
   unsuscribeUser() {
     this.userServices
       .updateUser(this.userSesionData.id, { activo: false })
-      .subscribe((response) => {
-        window.alert(response);
-        userSesion.set({ sesion: false, userData: [] });
+      .subscribe(() => {
+        userSesion.set({
+          sesion: false,
+          userData: {
+            id: '',
+            nombre1: '',
+            nombre2: '',
+            apellido1: '',
+            apellido2: '',
+            tipoDocumento: '',
+            numeroDocumento: '',
+            nacimiento: new Date(),
+            paisOrigen: '',
+            telefono: '',
+            email: '',
+            contrasena: '',
+            activo: true,
+          },
+        });
       });
   }
 

@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { PqrsService } from '../../services/pqrs.service';
-import { userSesion } from '../../store/user.store';
-import { PqrsBBDD } from '../../interfaces/pqrs';
+import { userPQRS, userSesion } from '../../store/user.store';
 import { PqrCardComponent } from '../pqrCard/pqrCard.component';
 
 @Component({
@@ -14,16 +13,17 @@ import { PqrCardComponent } from '../pqrCard/pqrCard.component';
 export class PaginaVerTodosComponent implements OnInit {
   pqrService = inject(PqrsService);
 
-  get userSesion() {
-    return userSesion().userData[0];
+  get userPQRS() {
+    return userPQRS();
   }
 
-  userPQRS = signal<PqrsBBDD[]>([]);
+  get userSesion() {
+    return userSesion().userData;
+  }
 
   ngOnInit(): void {
     this.pqrService.getPQR(this.userSesion.id).subscribe((response) => {
-      this.userPQRS.set(response);
-      console.log(response);
+      userPQRS.set(response);
     });
   }
 }
