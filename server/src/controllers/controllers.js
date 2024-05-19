@@ -2,6 +2,7 @@ const { User, PQR } = require("../db");
 const { Sequelize } = require("sequelize");
 const Op = Sequelize.Op;
 const axios = require("axios");
+const bcrypt = require("bcryptjs");
 
 const createUser = async (
   nombre1,
@@ -30,11 +31,21 @@ const createUser = async (
       },
     });
 
+    const filteredByTelNumber = await User.findOne({
+      where: {
+        telefono: telefono
+      },
+    });
+
     if (filteredByEmail) {
       return "Este correo electronico ya se encuentra registrado";
     } else if (filteredByNumID) {
       return "Este numero de documento ya se encuentra registrado";
+    } else if (filteredByTelNumber) {
+      return "Este numero de telefono ya se encuentra registrado";
     } else {
+      let hashPass = bcrypt.hashSync(contrasena,12);
+
       await User.create({
         nombre1,
         nombre2,
@@ -46,7 +57,7 @@ const createUser = async (
         paisOrigen,
         telefono,
         email,
-        contrasena,
+        contrasena: hashPass,
       });
       return "Usuario creado correctamente";
     }
@@ -55,49 +66,120 @@ const createUser = async (
   }
 }; //OK
 
-const updatingUser = async (id, email, telefono, contrasena, activo) => {
+const verificateUser = async (email, contrasena) => {
   try {
-    let filteredByEmail = false;
-    let filteredByTelephone = false;
 
-    if (email) {
-      filteredByEmail = await User.findOne({
-        where: {
-          email: email,
-        },
-      });
+    const filteredByEmail = await User.findOne({
+      where: {
+        email: email,
+      },
+    });
+
+    console.log(filteredByEmail);
+
+    if (!filteredByEmail){
+      return "Verifique las credenciales ingresadas correo"
     }
 
-    if (telefono) {
-      filteredByTelephone = await User.findOne({
-        where: {
-          telefono: telefono,
-        },
-      });
+    if(!filteredByEmail.activo){
+      return "Verifique las credenciales ingresadas inactivo"
     }
 
-    if (filteredByEmail) {
-      return "El correo proporcionado ya se encuentra registrado";
-    } else if (filteredByTelephone) {
-      return "El telefono proporcionado ya se encuentra registrado";
-    } else {
+    const equal = bcrypt.compareSync(contrasena,filteredByEmail.contrasena);
+
+    if (!equal){
+      return "Verifique las credenciales ingresadas contrasena"
+    }
+
+    return { succes: true, data: filteredByEmail, token: "Aqui va el token"}
+
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+const updatingUser = async (id, newEmail, newTelefono, newContrasena) => {
+  try {
+
+    if (newEmail !== "") {
+    let filteredByEmail = await User.findOne({
+        where: {
+          email: newEmail,
+        },
+      });
+
+      if (filteredByEmail) {
+        return "El correo proporcionado ya se encuentra registrado";
+      } else{
       await User.update(
         {
-          email: email,
-          telefono: telefono,
-          contrasena: contrasena,
-          activo: activo,
+          email: newEmail
         },
         {
           where: { id: id },
         }
-      );
-      return "Información actualizada correctamente";
+      );}
     }
+
+    if(newContrasena!== ""){
+      let userPassword = await User.findOne({where: { id: id }});
+      let samePassword = bcrypt.compareSync(newContrasena, userPassword.contrasena);
+
+      if (samePassword){
+        return "Proporcione una contrasena distinta a la actual"
+      } else{
+      await User.update(
+        {
+          contrasena: bcrypt.hashSync(newContrasena,12)
+        },
+        {
+          where: { id: id },
+        }
+      );}
+    }
+
+    if (newTelefono!== "") {
+      let filteredByTelephone = await User.findOne({
+        where: {
+          telefono: newTelefono,
+        },
+      });
+
+      if (filteredByTelephone) {
+        return "El telefono proporcionado ya se encuentra registrado";
+      } else{
+      await User.update(
+        {
+          telefono: newTelefono
+        },
+        {
+          where: { id: id },
+        }
+      );}
+    }
+    return "Información actualizada correctamente";
+  
   } catch (error) {
     throw new Error(error.message);
   }
 };
+
+const changeStateUser = async (id, newActivo) => {
+  try {
+    await User.update(
+      {
+        activo: newActivo
+      },
+      {
+        where: { id: id },
+      }
+    );
+
+    return "Usuario desahibilitado"
+  } catch (error) {
+    throw new Error(error.message); 
+  }
+}
 
 const findUser = async (email) => {
   try {
@@ -174,6 +256,8 @@ const getFlightsCode = async (code, date, hour) => {
 
 module.exports = {
   createUser,
+  verificateUser,
+  changeStateUser,
   createPQR,
   findPQR,
   findUser,

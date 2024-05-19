@@ -19,7 +19,7 @@
       type="text"
       id="firstName"
       name="firstName"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="nombre1"
     />
 
@@ -30,7 +30,7 @@
       type="text"
       id="secondName"
       name="secondName"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="nombre2"
     />
 
@@ -41,7 +41,7 @@
       type="text"
       id="lastName1"
       name="lastName1"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="apellido1"
     />
 
@@ -52,7 +52,7 @@
       type="text"
       id="lastName2"
       name="lastName2"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="apellido2"
     />
 
@@ -62,7 +62,7 @@
     <select
       id="country"
       name="country"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="paisOrigen"
     >
       @for (pais of paises; track pais){
@@ -71,23 +71,23 @@
     </select>
 
     <label for="birthday" class="block text-sm font-medium text-gray-700"
-      >Fecha de nacimiento*:</label
+      >Fecha de nacimiento *:</label
     >
     <input
       type="date"
       id="birthday"
       name="birthday"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="nacimiento"
     />
 
     <label for="typeID" class="block text-sm font-medium text-gray-700"
-      >Tipo de documento*:</label
+      >Tipo de documento *:</label
     >
     <select
       id="typeID"
       name="typeID"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="tipoDocumento"
     >
       @for (tipo of tiposDeDocumento; track tipo){
@@ -96,13 +96,13 @@
     </select>
 
     <label for="numID" class="block text-sm font-medium text-gray-700"
-      >Numero de documento*:</label
+      >Numero de documento *:</label
     >
     <input
       type="text"
       id="numID"
       name="numID"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="numeroDocumento"
     />
 
@@ -113,35 +113,35 @@
       type="text"
       id="telephone"
       name="telephone"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      iclass="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="telefono"
     />
 
     <label for="email" class="block text-sm font-medium text-gray-700"
-      >Email*:</label
+      >Email *:</label
     >
     <input
       type="email"
       id="email"
       name="email"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="email"
     />
 
     <label for="password" class="block text-sm font-medium text-gray-700"
-      >Contraseña*:</label
+      >Contraseña *:</label
     >
     <input
       type="password"
       id="password"
       name="password"
-      class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-1 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500"
+      class="mt-1 w-full border rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300"
       formControlName="contrasena"
     />
+    <br>
     <label class="block text-sm font-medium text-gray-700"
       >(*) = Campo requerido
     </label>
-
     @if(!verificate.value){
     <h1 class="text-sm font-semibold text-red-500 text-center p-2">
       {{ verificate.message }}
@@ -157,7 +157,7 @@
   </form>
 
   <div class="mt-4 text-center">
-    <span class="text-sm text-gray-600 dark:text-gray-300"
+    <span class="text-sm text-gray-500 dark:text-gray-500"
       >Ya eres socio?
     </span>
     <a class="text-yellow-600 hover:underline" routerLink="/logIn"

@@ -7,11 +7,11 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
 
-  getUser(email: string) {
-    return this.http.get<User>('http://localhost:3001/user/' + email);
-  }
+  baseURL = 'http://localhost:3001/user/'
+
+
+  constructor(private http: HttpClient) {}
 
   postUser(
     user: Partial<{
@@ -33,10 +33,23 @@ export class UserService {
     }>
   ) {
     console.log(user);
-    return this.http.post<string>('http://localhost:3001/user', user);
+    return this.http.post<string>(this.baseURL+ "register", user);
+  }
+
+  logInUser(data : any){
+  return this.http.post<any>(this.baseURL+"login", data);
+  }
+
+  getUser(email: string) {
+    return this.http.get<User>(this.baseURL + email);
   }
 
   updateUser(id: string, info: {}) {
-    return this.http.patch<string>('http://localhost:3001/user/' + id, info);
+    return this.http.patch<string>(this.baseURL+ id, info);
   }
+
+  unsuscribeUser(id:string){
+    return this.http.patch<string>(this.baseURL+"unsuscribe/"+ id, {newActivo: false});
+  }
+
 }

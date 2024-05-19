@@ -25,16 +25,17 @@ import {
 })
 export class UserSettingsComponent {
   userNewData = new FormGroup({
-    email: new FormControl('', [Validators.email]),
-    telefono: new FormControl('', [
+    newEmail: new FormControl('', [Validators.email]),
+    newTelefono: new FormControl('', [
       Validators.maxLength(20),
       Validators.minLength(7),
     ]),
-    contrasena: new FormControl('', [
+    newContrasena: new FormControl('', [
       Validators.minLength(8),
       Validators.maxLength(20),
-    ]),
+    ])
   });
+
   updated = signal({ value: false, color: '', message: '' });
   userServices = inject(UserService);
   router = inject(Router);
@@ -52,7 +53,7 @@ export class UserSettingsComponent {
 
   unsuscribeUser() {
     this.userServices
-      .updateUser(this.userSesionData.id, { activo: false })
+      .unsuscribeUser(this.userSesionData.id)
       .subscribe(() => {
         userSesion.set({
           sesion: false,
@@ -88,34 +89,15 @@ export class UserSettingsComponent {
   }
 
   verificateNewData() {
-    let info = {};
     let value = this.userNewData.value;
-    if (value.email == '' && value.contrasena == '' && value.telefono == '') {
+    if (value.newEmail == '' && value.newContrasena == '' && value.newTelefono == '') {
       this.updated.set({
         value: true,
         color: 'red',
         message: 'Debe proporcionar la información a actualizar',
       });
-    } else if (
-      value.email != '' &&
-      value.contrasena != '' &&
-      value.telefono != ''
-    ) {
-      this.updateUser(value);
     } else {
-      if (value.email != '') {
-        info = { ...info, email: value.email };
-      }
-
-      if (value.contrasena != '') {
-        info = { ...info, contrasena: value.contrasena };
-      }
-
-      if (value.telefono != '') {
-        info = { ...info, telefono: value.telefono };
-      }
-
-      this.updateUser(info);
+      this.updateUser(value);
     }
   }
 }

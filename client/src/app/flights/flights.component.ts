@@ -157,7 +157,9 @@ export class FlightsComponent implements OnInit {
   ngOnInit() {
     this.airportsService.getAllAirports().subscribe((response) => {
       this.allAirports.set(response);
-      this.getCountryOptions();
+      console.log(response)
+      //this.getCountryOptions();
     });
   }
+
 }

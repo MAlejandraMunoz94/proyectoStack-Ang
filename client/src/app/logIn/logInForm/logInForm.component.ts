@@ -17,34 +17,16 @@ export class LogInFormComponent {
   autenticate = true;
   logInData = new FormGroup({
     email: new FormControl(),
-    password: new FormControl(),
+    contrasena: new FormControl(),
   });
-  userLogs = signal<User>({
-    id: '',
-    nombre1: '',
-    nombre2: '',
-    apellido1: '',
-    apellido2: '',
-    tipoDocumento: '',
-    numeroDocumento: '',
-    nacimiento: new Date(),
-    paisOrigen: '',
-    telefono: '',
-    email: '',
-    contrasena: '',
-    activo: true,
-  });
+  userLogs = signal<any>({});
 
   public userServices = inject(UserService);
   public router = inject(Router);
 
   validateUser() {
-    if (
-      this.userLogs().activo &&
-      this.logInData.value.email == this.userLogs().email &&
-      this.logInData.value.password == this.userLogs().contrasena
-    ) {
-      userSesion.set({ sesion: true, userData: this.userLogs() });
+    if (this.userLogs().succes) {
+      userSesion.set({ sesion: true, userData: this.userLogs().data });
       this.router.navigate(['/home']);
     } else {
       this.autenticate = false;
@@ -52,8 +34,8 @@ export class LogInFormComponent {
   }
 
   logInFormSubmit() {
-    this.userServices.getUser(this.logInData.value.email).subscribe((user) => {
-      this.userLogs.set(user);
+    this.userServices.logInUser(this.logInData.value).subscribe((response) => {
+      this.userLogs.set(response);
       this.validateUser();
     });
   }

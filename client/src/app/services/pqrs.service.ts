@@ -6,17 +6,19 @@ import { PqrsBBDD } from '../interfaces/pqrs';
   providedIn: 'root',
 })
 export class PqrsService {
+  baseURL = 'http://localhost:3001/PQR/'
+
   constructor(private http: HttpClient) {}
 
   postPQR(id: string, pqr: {}) {
-    return this.http.post<string>('http://localhost:3001/PQR/' + id, pqr);
+    return this.http.post<string>(this.baseURL + id, pqr);
   }
 
   getPQR(id: string) {
-    return this.http.get<PqrsBBDD[]>('http://localhost:3001/PQR/' + id);
+    return this.http.get<PqrsBBDD[]>(this.baseURL + id);
   }
 
   deletePQR(id: string) {
-    return this.http.delete<string>('http://localhost:3001/PQR/' + id);
+    return this.http.delete<string>(this.baseURL+ id);
   }
 }
